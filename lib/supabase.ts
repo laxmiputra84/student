@@ -7,7 +7,11 @@ if (!supabaseUrl || !supabaseAnonKey) {
     console.warn('Supabase credentials missing. Please check your .env.local file.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Fallback to placeholders during build time to prevent prerendering errors
+export const supabase = createClient(
+    supabaseUrl || 'https://placeholder-project.supabase.co',
+    supabaseAnonKey || 'placeholder-anon-key'
+);
 
 export async function logActivity(msg: string, type: string = 'info') {
     try {
