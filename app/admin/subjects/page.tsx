@@ -87,12 +87,13 @@ export default function SubjectsCatalog() {
                     .update(payload)
                     .eq('id', isEditing.id);
                 if (sbError) throw sbError;
+                logActivity(`Updated Subject: ${formData.name} (${formData.code})`, 'info');
             } else {
                 const { error: sbError } = await supabase
                     .from('subjects')
                     .insert([payload]);
                 if (sbError) throw sbError;
-                logActivity("Admin", isEditing ? "Updated Subject" : "Added New Subject", `${formData.name} (${formData.code})`);
+                logActivity(`Added New Subject: ${formData.name} (${formData.code})`, 'success');
             }
             setIsModalOpen(false);
             setIsEditing(null);
@@ -122,7 +123,7 @@ export default function SubjectsCatalog() {
                 .delete()
                 .eq('id', id);
             if (sbError) throw sbError;
-            logActivity("Admin", "Deleted Subject", id);
+            logActivity(`Deleted Subject: ${id}`, 'warning');
             fetchSubjects();
         } catch (err) {
             setSubjects(subjects.filter(s => s.id !== id));
