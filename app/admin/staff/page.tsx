@@ -93,12 +93,13 @@ export default function StaffDirectory() {
                     .update(formData)
                     .eq('id', isEditing.id);
                 if (sbError) throw sbError;
+                logActivity(`Updated staff member: ${formData.name}`, 'info');
             } else {
                 const { error: sbError } = await supabase
                     .from('staff')
                     .insert([formData]);
                 if (sbError) throw sbError;
-                logActivity(`${isEditing ? 'Updated' : 'Added'} staff member: ${formData.name}`, 'success');
+                logActivity(`Added new staff member: ${formData.name}`, 'success');
             }
             setIsModalOpen(false);
             setIsEditing(null);

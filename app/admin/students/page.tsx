@@ -96,6 +96,7 @@ export default function StudentsList() {
                     .update(studentData)
                     .eq('id', isEditing.id);
                 if (sbError) throw sbError;
+                logActivity(`Updated student: ${formData.name}`, 'info');
             } else {
                 // Create
                 const studentData = { ...formData, attendance: parseInt(formData.attendance) || 0 };
